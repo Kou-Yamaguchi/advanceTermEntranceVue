@@ -35,25 +35,25 @@ export default {
   },
   methods: {
     async getTodo() {
-      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todo/");
+      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todos/");
       this.todoLists = resData.data.data;
     },
     async addItem() {
       const sendData = {
         todo: this.newText,
       };
-      await axios.post("https://limitless-shelf-51102.herokuapp.com/api/todo/", sendData);
+      await axios.post("https://limitless-shelf-51102.herokuapp.com/api/todos/", sendData);
       await this.getTodo();
     },
     async updateItem(id, name) {
       const updateData = {
         name: name,
       };
-      await axios.put("https://limitless-shelf-51102.herokuapp.com/api/todo/" + id, updateData);
+      await axios.put("https://limitless-shelf-51102.herokuapp.com/api/todos/" + id, updateData);
       await this.getTodo();
     },
     async deleteItem(id) {
-      await axios.delete("https://limitless-shelf-51102.herokuapp.com/api/todo/" + id);
+      await axios.delete("https://limitless-shelf-51102.herokuapp.com/api/todos/" + id);
       await this.getTodo();
     }
   },
