@@ -12,7 +12,7 @@
           </div>
           <div class="list">
             <div class="content" v-for="item in todoLists" :key="item.id">
-              <input type="text" v-model="item.name">
+              <input class="inputLists" type="text" v-model="item.name">
               <button @click="updateItem(item.id, item.name)" class="buttonRenew">更新</button>
               <button @click="deleteItem(item.id)" class="buttonDelete">削除</button>
             </div>
@@ -30,17 +30,22 @@ export default {
   data() {
     return {
       newText: "",
-      todoLists: [],
+      todoLists: [
+        {
+          "id": 2,
+          "name": "量子"
+        }
+      ],
     };
   },
   methods: {
     async getTodo() {
-      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todos/");
+      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todo/");
       this.todoLists = resData.data.data;
     },
     async addItem() {
       const sendData = {
-        todo: this.newText,
+        name: this.newText,
       };
       await axios.post("https://limitless-shelf-51102.herokuapp.com/api/todos/", sendData);
       await this.getTodo();
@@ -208,6 +213,14 @@ html {
   color: black;
 }
 
+.inputLists {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: black;
+}
+
 button {
   padding: 8px 16px;
   font-weight: bold;
@@ -238,4 +251,14 @@ button:hover {
 .buttonRenew:hover {
   background-color: #fa9770;
 }
+
+.buttonDelete {
+  border: 2px solid #71fadc;
+  color: #71fadc;
+}
+
+.buttonDelete:hover {
+  background-color: #71fadc;
+}
+
 </style>
