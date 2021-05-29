@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async getTodo() {
-      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todo/");
+      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todos/");
       this.todoLists = resData.data.data;
     },
     async addItem() {
