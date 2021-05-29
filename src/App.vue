@@ -26,6 +26,7 @@
 <script>
 import axios from "axios";
 export default {
+  props: ["id"],
   data() {
     return {
       newText: "",
@@ -34,25 +35,25 @@ export default {
   },
   methods: {
     async getTodo() {
-      const resData = await axios.get("http://127.0.0.1:8000/api/todo/");
+      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todo/");
       this.todoLists = resData.data.data;
     },
     async addItem() {
       const sendData = {
         todo: this.newText,
       };
-      await axios.post("http://127.0.0.1:8000/api/todo/", sendData);
+      await axios.post("https://limitless-shelf-51102.herokuapp.com/api/todo/", sendData);
       await this.getTodo();
     },
     async updateItem(id, name) {
       const updateData = {
         name: name,
       };
-      await axios.put("http://127.0.0.1:8000/api/todo/" + id, updateData);
+      await axios.put("https://limitless-shelf-51102.herokuapp.com/api/todo/" + id, updateData);
       await this.getTodo();
     },
     async deleteItem(id) {
-      await axios.delete("http://127.0.0.1:8000/api/todo/" + id);
+      await axios.delete("https://limitless-shelf-51102.herokuapp.com/api/todo/" + id);
       await this.getTodo();
     }
   },
