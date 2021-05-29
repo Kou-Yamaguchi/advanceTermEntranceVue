@@ -13,8 +13,10 @@
           <div class="list">
             <div class="content" v-for="item in todoLists" :key="item.id">
               <input class="inputLists" type="text" v-model="item.name">
-              <button @click="updateItem(item.id, item.name)" class="buttonRenew">更新</button>
-              <button @click="deleteItem(item.id)" class="buttonDelete">削除</button>
+              <div class="buttons">
+                <button @click="updateItem(item.id, item.name)" class="buttonRenew">更新</button>
+                <button @click="deleteItem(item.id)" class="buttonDelete">削除</button>
+              </div>
             </div>
           </div>
         </div>
@@ -30,35 +32,31 @@ export default {
   data() {
     return {
       newText: "",
-      todoLists: [
-        {
-          "id": 2,
-          "name": "量子"
-        }
-      ],
+      todoLists: [],
     };
   },
   methods: {
     async getTodo() {
-      const resData = await axios.get("https://limitless-shelf-51102.herokuapp.com/api/todos/");
+      const resData = await axios.get("http://127.0.0.1:8000/api/todo/");
       this.todoLists = resData.data.data;
     },
     async addItem() {
       const sendData = {
         name: this.newText,
       };
-      await axios.post("https://limitless-shelf-51102.herokuapp.com/api/todos/", sendData);
+      await axios.post("http://127.0.0.1:8000/api/todo/", sendData);
+      this.newText = "",
       await this.getTodo();
     },
     async updateItem(id, name) {
       const updateData = {
         name: name,
       };
-      await axios.put("https://limitless-shelf-51102.herokuapp.com/api/todos/" + id, updateData);
+      await axios.put("http://127.0.0.1:8000/api/todo/" + id, updateData);
       await this.getTodo();
     },
     async deleteItem(id) {
-      await axios.delete("https://limitless-shelf-51102.herokuapp.com/api/todos/" + id);
+      await axios.delete("http://127.0.0.1:8000/api/todo/" + id);
       await this.getTodo();
     }
   },
@@ -202,6 +200,7 @@ html {
   height: 38px;
   margin-bottom: 15px;
   display: flex;
+  justify-content: space-between;
 }
 
 .inputAdd {
@@ -219,6 +218,16 @@ html {
   border: 1px solid #ccc;
   font-size: 14px;
   color: black;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.buttons {
+  display: flex;
 }
 
 button {
@@ -254,11 +263,11 @@ button:hover {
 
 .buttonDelete {
   border: 2px solid #71fadc;
+  margin-left: 5px;
   color: #71fadc;
 }
 
 .buttonDelete:hover {
   background-color: #71fadc;
 }
-
 </style>
